@@ -2,10 +2,15 @@
 
 The homepage of ComputeDriven, a systems studio.
 
-One static page, no build step, no dependencies. `index.html` carries its own
-CSS and a little vanilla JavaScript; `img/` holds the screenshots. The portfolio
-nav is loaded from `/amp-nav.js`, which is deployed by `sync-nav.sh` in the
-[&] workspace rather than edited here.
+One static page, no build step, no npm. `index.html` carries its own CSS and a
+little vanilla JavaScript; `img/` holds the screenshots. The portfolio nav is
+loaded from `/amp-nav.js`, which is deployed by `sync-nav.sh` in the [&]
+workspace rather than edited here.
+
+It has exactly **one third-party runtime dependency**, and it is worth naming
+rather than burying: the contact form posts to Formspree. Nothing else on the
+page calls out at load, and the page still renders and downloads work with
+`formspree.io` blocked — only the form stops.
 
 ## The argument the page makes
 
@@ -43,6 +48,23 @@ construction. Change them in the same commit that changes the date beneath
 them, and count only what is actually filed — a page that inflates its own
 evidence count has lost the whole argument. When the first report from real
 hardware lands, the "Never booted on real hardware" gap card must change too.
+
+## The contact form
+
+Under the boot-report grid, posting to `https://formspree.io/f/xaewoadr`. **No
+email address appears anywhere on this page** — that is the point of using an
+endpoint, so do not reintroduce a `mailto:` as a "fallback".
+
+It is a real `<form>` with `action` and `method`, so it works with scripting
+off; the script only upgrades it to an inline reply instead of a redirect to
+Formspree's own thank-you page. `_gotcha` is Formspree's honeypot and is
+positioned off-screen rather than `display: none`.
+
+**"Sent" is printed only on an actual 2xx from the endpoint.** A form that
+thanks you on submit and drops the message is precisely the failure this site
+is about. Failures print the reason the endpoint gave, and the typed message
+survives so it can be retried. If you touch that handler, keep the three paths
+honest: server error, network failure, success.
 
 ## Editing rules
 
