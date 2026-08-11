@@ -668,6 +668,118 @@
                 margin-top: 0.3rem;
             }
 
+            /* ---------- boot reports ---------- */
+            .jn {
+                display: grid;
+                grid-template-columns: 1.35fr 1fr;
+                gap: 1.1rem;
+                margin-top: 1.9rem;
+                align-items: start;
+            }
+            @media (max-width: 800px) {
+                .jn {
+                    grid-template-columns: 1fr;
+                }
+            }
+            .jn-what,
+            .jn-act {
+                border: 1px solid var(--border-soft);
+                border-radius: 8px;
+                background: var(--surface);
+                padding: 1.15rem 1.25rem;
+            }
+            .jn-act {
+                border-color: var(--border);
+                background: var(--surface-2);
+            }
+            .jn h3 {
+                font-size: 0.92rem;
+                font-weight: 600;
+                color: var(--text);
+            }
+            .jn-what ol {
+                margin: 0.9rem 0 0;
+                padding: 0;
+                list-style: none;
+                counter-reset: jn;
+            }
+            .jn-what li {
+                counter-increment: jn;
+                position: relative;
+                padding-left: 1.9rem;
+                margin-bottom: 0.6rem;
+                color: var(--dim);
+                font-size: 0.88rem;
+            }
+            .jn-what li::before {
+                content: counter(jn);
+                position: absolute;
+                left: 0;
+                top: 0.05rem;
+                width: 1.25rem;
+                text-align: center;
+                font-family: var(--mono);
+                font-size: 0.7rem;
+                color: var(--bronze);
+                border: 1px solid var(--border);
+                border-radius: 3px;
+            }
+            .jn-what li b {
+                color: var(--text);
+                font-weight: 600;
+            }
+            /* The inverted claim: a failure is the more valuable submission, so it is
+               marked with the cyan the page uses for its own derivations, not the red
+               it uses for holes. A failed boot is data arriving, not a problem. */
+            .jn-flip {
+                margin-top: 1.1rem;
+                border-left: 3px solid var(--cyan);
+                background: rgba(45, 226, 230, 0.05);
+                border-radius: 0 6px 6px 0;
+                padding: 0.75rem 0.95rem;
+                font-size: 0.86rem;
+                color: var(--dim);
+            }
+            .jn-flip b {
+                color: var(--cyan);
+                font-weight: 600;
+            }
+            .jn-count {
+                font-family: var(--mono);
+                font-size: 0.72rem;
+                color: var(--muted);
+                line-height: 1.75;
+                margin-top: 0.75rem;
+            }
+            .jn-count b {
+                color: var(--amber);
+                font-weight: 600;
+            }
+            .jn-act .btn-dl {
+                margin-top: 1rem;
+                width: 100%;
+                justify-content: center;
+            }
+            .jn-act .btn-ghost {
+                margin-top: 0.5rem;
+                width: 100%;
+                justify-content: center;
+                font-size: 0.83rem;
+            }
+            .jn-foot {
+                margin-top: 1.4rem;
+                font-size: 0.86rem;
+                color: var(--muted);
+                max-width: 68ch;
+            }
+            .jn-foot a {
+                color: var(--dim);
+                border-bottom: 1px solid var(--border);
+            }
+            .jn-foot a:hover {
+                color: var(--amber);
+            }
+
             .shots {
                 display: grid;
                 grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -903,6 +1015,7 @@
                     <a href="#hold">What we hold to</a>
                     <a href="#run">Run it</a>
                     <a href="#gaps">Untested</a>
+                    <a href="#join">Join</a>
                     <a class="navdl" href="#get">Download</a>
                 </div>
             </div>
@@ -1506,10 +1619,94 @@ sudo dd if=tandr.raw of=/dev/nvme0n1 bs=4M status=progress conv=fsync</div>
                             <p>
                                 These are the first published images. Every measurement on this page
                                 comes from our machines, which is the weakest kind of evidence there
-                                is.
+                                is. <a href="#join">That one is yours to close.</a>
                             </p>
                         </div>
                     </div>
+                </div>
+            </section>
+
+            <!--
+                The join surface. It exists because the nav's CTA said "Join ComputeDriven"
+                while there was nothing on the page to join — the precise failure this site
+                argues against. What it offers is not a newsletter: the last gap above is
+                the only one we are structurally unable to close ourselves, so joining is
+                defined as supplying the thing we cannot: a second machine.
+            -->
+            <section id="join">
+                <div class="wrap">
+                    <div class="kicker">Boot reports</div>
+                    <h2>Be the machine that <em>isn't ours</em>.</h2>
+                    <p class="lead">
+                        Every number on this page was measured here, on hardware we own. No amount of
+                        care fixes that — a claim only becomes a result when somebody else's machine
+                        derives it too. So joining ComputeDriven is not a subscription. It is running
+                        an image and saying what happened.
+                    </p>
+
+                    <div class="jn">
+                        <div class="jn-what">
+                            <h3>What a boot report is</h3>
+                            <ol>
+                                <li>
+                                    <b>The machine.</b> CPU and firmware, or the hypervisor and its
+                                    version — enough that somebody could try the same thing.
+                                </li>
+                                <li>
+                                    <b>The image, and its sha256.</b> Whether the sum you got matches
+                                    the one quoted above.
+                                </li>
+                                <li>
+                                    <b>Whether it reached a login prompt.</b> Yes, no, or yes-but.
+                                </li>
+                                <li>
+                                    <b>What <code>trvs doctor</code> printed</b>, verbatim. On 0.3 it
+                                    should answer <code>status ready</code> having set nothing up. If
+                                    <code>trvs id</code> hands you a different
+                                    <code>sem-</code> identity than ours, that is the most
+                                    interesting thing you could possibly send us.
+                                </li>
+                            </ol>
+                            <p class="jn-flip">
+                                <b>A boot that fails is the better report.</b> Success confirms what
+                                we already published; a failure is a measurement we do not have. USB
+                                and bare metal have never been booted by anyone — the first person to
+                                try is doing the experiment, whichever way it goes.
+                            </p>
+                        </div>
+
+                        <aside class="jn-act">
+                            <h3>File one</h3>
+                            <p class="jn-count">
+                                Reports received: <b>0</b><br />
+                                From real hardware: <b>0</b><br />
+                                As of 11 August 2026
+                            </p>
+                            <a
+                                class="btn-dl"
+                                href="https://github.com/c-u-l8er/travel-and-rrabbit/issues/new?template=boot-report.yml"
+                                >File a boot report <span class="sz">GitHub</span></a
+                            >
+                            <a
+                                class="btn-ghost"
+                                href="https://github.com/c-u-l8er/travel-and-rrabbit/issues?q=is%3Aissue+label%3Aboot-report"
+                                >Read the ones already filed</a
+                            >
+                            <p class="jn-count">
+                                Needs a GitHub account. Five fields are required; the rest can stay
+                                blank.
+                            </p>
+                        </aside>
+                    </div>
+
+                    <p class="jn-foot">
+                        There is no mailing list, and this page will not pretend there is one. If you
+                        only want to know when an image ships, watch
+                        <a href="https://github.com/c-u-l8er/travel-and-rrabbit">the repository</a>
+                        for releases, or take the
+                        <a href="https://github.com/c-u-l8er/travel-and-rrabbit/releases.atom">feed</a>.
+                        Anything else: <a href="mailto:hello@computedriven.com">hello@computedriven.com</a>.
+                    </p>
                 </div>
             </section>
         </main>
