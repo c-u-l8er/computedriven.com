@@ -184,7 +184,10 @@
                 padding: 0.42rem 0.9rem;
                 border-radius: 5px;
             }
-            @media (max-width: 780px) {
+            /* 810, not 780: between 781 and 800 the links still rendered and the bar
+               ran ~6px past the viewport, so the whole document scrolled sideways.
+               Measured, not guessed — the links must hide BEFORE they overflow. */
+            @media (max-width: 810px) {
                 .navlinks a:not(.navdl) {
                     display: none;
                 }
@@ -967,6 +970,15 @@
             .wrlbox .win {
                 color: var(--cyan);
             }
+
+            /* The kernel's operator is spelled `|>`. A coding font with ligatures draws
+               that as a single ▷, which is prettier and unsearchable — the reader cannot
+               tell what to type or grep for. The WRL listings above keep their ligatures
+               because `--sig-->` genuinely reads better as an arrow. */
+            #cert .wrlbox {
+                font-variant-ligatures: none;
+                font-feature-settings: "liga" 0, "calt" 0;
+            }
             .wrlbox .rd {
                 color: var(--amber);
             }
@@ -1047,6 +1059,149 @@
                 }
             }
 
+            /* ---------- the five rungs ---------- */
+            .rungs {
+                margin-top: 2rem;
+                border: 1px solid var(--border-soft);
+                border-radius: 9px;
+                overflow: hidden;
+            }
+            .rung {
+                display: grid;
+                grid-template-columns: 9rem 1fr 11rem;
+                gap: 0.9rem;
+                padding: 1.05rem 1.1rem;
+                align-items: baseline;
+            }
+            .rung + .rung {
+                border-top: 1px solid var(--border-soft);
+            }
+            .rung .rn {
+                font-family: var(--mono);
+                font-size: 0.84rem;
+                font-weight: 700;
+                color: var(--text);
+            }
+            .rung .rn span {
+                display: block;
+                font-size: 0.6rem;
+                font-weight: 400;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                color: var(--muted);
+                margin-top: 0.3rem;
+            }
+            .rung .rw {
+                color: var(--dim);
+                font-size: 0.88rem;
+            }
+            .rung .rw b {
+                color: var(--text);
+                font-weight: 600;
+            }
+
+            /* The chip states an evidence rung and nothing else. Cyan is this page's
+               colour for a live reading, so `spec` must never be allowed to wear it —
+               an unbuilt rung that looks live is the exact failure this site is about. */
+            .rc {
+                display: inline-block;
+                font-family: var(--mono);
+                font-size: 0.62rem;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                padding: 0.2em 0.55em;
+                border: 1px solid;
+                border-radius: 3px;
+                white-space: nowrap;
+            }
+            .rc.live {
+                color: var(--cyan);
+            }
+            .rc.part {
+                color: var(--amber);
+            }
+            .rc.spec {
+                color: var(--muted);
+            }
+            .rc-note {
+                display: block;
+                font-size: 0.72rem;
+                color: var(--muted);
+                margin-top: 0.45rem;
+            }
+            .legend {
+                margin-top: 1rem;
+                font-size: 0.82rem;
+                color: var(--muted);
+            }
+            .legend code {
+                color: var(--dim);
+            }
+
+            /* #tracks reuses the road/window two-column ladder for a shipped-vs-missing
+               table, the same way #roadfs does — so it needs the same correction. */
+            #tracks .lrow .win-c {
+                color: var(--muted);
+            }
+
+            @media (max-width: 700px) {
+                .rung {
+                    grid-template-columns: 1fr;
+                    gap: 0.45rem;
+                }
+                #tracks .lrow .road-c::before {
+                    content: "ships · ";
+                }
+                #tracks .lrow .win-c::before {
+                    content: "missing · ";
+                }
+            }
+
+            /* ---------- participation ---------- */
+            .steps-h {
+                margin-top: 2.4rem;
+                font-size: 1.02rem;
+                font-weight: 600;
+                color: var(--text);
+            }
+            .steps {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+                gap: 0.9rem;
+                margin-top: 1.6rem;
+            }
+            .step {
+                border: 1px solid var(--border-soft);
+                border-left: 3px solid var(--cyan);
+                border-radius: 0 8px 8px 0;
+                background: var(--surface);
+                padding: 0.95rem 1.05rem;
+            }
+            /* A rung that does not exist is not an invitation, and must not be
+               coloured like one. */
+            .step.none {
+                border-left-color: var(--muted);
+            }
+            .step h3 {
+                font-size: 0.92rem;
+                font-weight: 600;
+                color: var(--text);
+            }
+            .step .cost {
+                display: block;
+                font-family: var(--mono);
+                font-size: 0.62rem;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: var(--muted);
+                margin-top: 0.3rem;
+            }
+            .step p {
+                color: var(--dim);
+                font-size: 0.85rem;
+                margin-top: 0.55rem;
+            }
+
             /* ---------- creed ---------- */
             .creed {
                 counter-reset: c;
@@ -1115,9 +1270,9 @@
                 </a>
                 <div class="navlinks">
                     <a href="#thesis">Thesis</a>
-                    <a href="#shape">The shape</a>
-                    <a href="#roadfs">Where it's going</a>
-                    <a href="#hold">What we hold to</a>
+                    <a href="#ladder">The ladder</a>
+                    <a href="#tracks">Tracks</a>
+                    <a href="#cert">Certificate</a>
                     <a href="#run">Run it</a>
                     <a href="#gaps">Untested</a>
                     <a href="#join">Join</a>
@@ -1314,6 +1469,166 @@
                 </div>
             </section>
 
+            <!-- ============ THE LADDER ============ -->
+            <!--
+                The five rungs are the spine. Every other site in this portfolio is meant
+                to place itself on exactly one of them, which only works if the rungs are
+                labelled honestly here first. The chip on each row is an evidence rung,
+                not a mood: two of the five are standing and three are drawings, and a
+                table that blurred that would be an ordinary roadmap.
+            -->
+            <section id="ladder">
+                <div class="wrap">
+                    <div class="kicker">The ladder</div>
+                    <h2>Five rungs. <em>Three of them hold weight.</em></h2>
+                    <p class="lead">
+                        A world you can drive, that remembers where you went, and can be asked to
+                        go there again — under a certificate saying it was allowed to. That is the
+                        whole intention. It comes apart into five steps, and they are not equally
+                        real.
+                    </p>
+
+                    <div class="rungs">
+                        <div class="rung">
+                            <div class="rn">DRIVE <span>rung one</span></div>
+                            <div class="rw">
+                                A person moves through the world. Roads, windows, gauges — an
+                                operating system you <b>steer</b> rather than a desktop you tidy.
+                            </div>
+                            <div>
+                                <span class="rc live">live_local</span>
+                                <span class="rc-note"
+                                    >the shell runs; three of the system's own programs stood as
+                                    windows on 2026-08-13</span
+                                >
+                            </div>
+                        </div>
+                        <div class="rung">
+                            <div class="rn">TRACK <span>rung two</span></div>
+                            <div class="rw">
+                                The traversal is <b>recorded</b> — which road, how far along it,
+                                which window you were standing in, the trail behind you, and an
+                                append-only log beside the trail.
+                            </div>
+                            <div>
+                                <span class="rc live">live_local</span>
+                                <span class="rc-note"
+                                    >1–999 tracks, sparse, with a reel to manage them — but the
+                                    recording covers 4 of about 15 verbs</span
+                                >
+                            </div>
+                        </div>
+                        <div class="rung">
+                            <div class="rn">REPLAY <span>rung three</span></div>
+                            <div class="rw">
+                                The track runs <b>again</b>, against a world that persisted — and
+                                <b>refuses by name</b> if that world moved underneath it.
+                            </div>
+                            <div>
+                                <span class="rc live">live_local</span>
+                                <span class="rc-note"
+                                    >roads checked before anything moves; typed refusals; no silent
+                                    repair — shipped 2026-08-15</span
+                                >
+                            </div>
+                        </div>
+                        <div class="rung">
+                            <div class="rn">GENERALIZE <span>rung four</span></div>
+                            <div class="rw">
+                                WRL abstracts the track into a <b>program</b> — the one route you
+                                drove becomes the class of routes you meant.
+                            </div>
+                            <div>
+                                <span class="rc spec">spec</span>
+                                <span class="rc-note"
+                                    >blocked on closing the op vocabulary, which is a decision and
+                                    not a task</span
+                                >
+                            </div>
+                        </div>
+                        <div class="rung">
+                            <div class="rn">AUTONOMOUS <span>rung five</span></div>
+                            <div class="rw">
+                                A model <b>proposes</b> WRL text; the host <b>derives</b> the edit
+                                from it rather than running what the model wrote; the kernel rules
+                                on whether it was permitted.
+                            </div>
+                            <div>
+                                <span class="rc spec">spec</span>
+                                <span class="rc-note">designed in full, built not at all</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="legend">
+                        <code>live_local</code> — run end to end, on a machine here, at least once.
+                        <code>spec</code> — written down, not built. There is deliberately no rung
+                        on this page meaning <em>we are confident it works</em>.
+                    </p>
+
+                    <p class="verdict">
+                        Our own audit had rung three at <code>spec</code> — <em>"no implementation
+                        found"</em> — as recently as <b>yesterday</b>. It shipped on 15 August, and
+                        this table was corrected before the page went up rather than after somebody
+                        noticed. <b>The frontier is rung four now</b>, and rung four is not waiting
+                        on work: it is waiting on a decision about what the verbs are.
+                    </p>
+                    <span class="tag no">rungs 4–5 are not built · nothing on this page ships them</span>
+                </div>
+            </section>
+
+            <!-- ============ THE WINDOW IS A VEHICLE ============ -->
+            <!--
+                This section exists to kill a question before it is asked. "An OS in the
+                browser" reads as "they are writing a browser", which is a way to spend
+                three years losing to Chrome. The shell does the inverse and the
+                distinction is load-bearing, so it is stated in the first two sentences.
+            -->
+            <section id="vehicle">
+                <div class="wrap">
+                    <div class="kicker">The surface</div>
+                    <h2>The window is a vehicle. <em>It is not a browser.</em></h2>
+                    <p class="lead">
+                        The obvious way to put an operating system on the internet is to write a
+                        browser. It is also the most reliable way to spend three years and lose:
+                        Chrome is counted in billions of users, and every agent-driven browser
+                        shipped so far, added together, is a rounding error against the online
+                        population.
+                    </p>
+
+                    <p class="lead">
+                        So the shell runs the other direction. It does not put pages inside a
+                        browser — <b>it puts the operating system inside one.</b> A Wayland
+                        compositor whose surfaces are ordinary native applications, encoded and
+                        carried to a canvas, standing as windows along a road you drive through.
+                    </p>
+
+                    <p class="lead">
+                        The three programs in the photograph at the top of this page are not web
+                        pages and were not modified to appear there: a <code>foot</code> terminal, a
+                        Mousepad editor and a GTK file chooser, in a 4 GB guest at 3840×2160 with no
+                        GPU and no <code>/dev/dri</code> — software EGL, software H.264, and the
+                        frames arrive.
+                    </p>
+
+                    <p class="lead">
+                        What the vehicle buys is the two things a page in a tab does not have: an
+                        <b>address</b> — the subject of the next section — and a boundary you can
+                        hang rules on. What it does not buy is universal compatibility, and there is
+                        a plain example. <b>Firefox will not come aboard.</b> It connects, opens its
+                        protocol channel, and then never maps a surface: no window, no error, no
+                        output on either stream. Reproduced 2026-08-14. Cause unknown.
+                    </p>
+
+                    <p class="verdict">
+                        A rendering engine is years of work and a race that was won by somebody else
+                        a decade ago. <b>A vehicle is a wrapper around one</b> — and the wrapper is
+                        where the address, the rules and the certificate live.
+                    </p>
+                    <span class="tag in">the shell runs · the picture at the top of this page is it</span>
+                </div>
+            </section>
+
             <!-- ============ THE ROAD IS THE FILESYSTEM ============ -->
             <section id="roadfs">
                 <div class="wrap">
@@ -1406,6 +1721,178 @@
                         download from this page.
                     </p>
                     <span class="tag no">the right-hand column is not built · nothing on this page ships it</span>
+                </div>
+            </section>
+
+            <!-- ============ TRACKS ============ -->
+            <!--
+                Rungs two and three, in detail. Written 2026-08-15, the day replay
+                shipped, against `RRABBIT/m2/{tracks,reel,ops,travel}.js` and
+                docs/TRACKS_HANDOFF.md -- not against the plan, which still had this
+                rung at `spec`. The refusal codes below are copied from the source and
+                the gap list is the handoff's own, unshortened.
+            -->
+            <section id="tracks">
+                <div class="wrap">
+                    <div class="kicker">Tracks</div>
+                    <h2>A macro repeats. <em>A track checks.</em></h2>
+                    <p class="lead">
+                        Recording what somebody did and playing it back is an old idea and not the
+                        interesting part. The interesting part is what happens when the world has
+                        <em>changed</em> since — because it will have.
+                    </p>
+
+                    <p class="lead">
+                        The shell keeps up to 999 tracks, made as you need them. Each one remembers
+                        the road it is on, how far along every road it had driven, the window it was
+                        standing in, a capped trail for retracing, and — beside the trail — an
+                        append-only log that is never truncated. The two are deliberately different
+                        objects: the trail is lossy on purpose, and <b>a recording must not be.</b>
+                        When the log does hit its cap, the number of steps that fell off the front
+                        is <em>kept</em>, so a replay can tell it is holding a tail and decline to
+                        call it the whole drive.
+                    </p>
+
+                    <p class="lead">
+                        Replaying one happens in two phases, and the split is forced rather than
+                        chosen. <b>Roads are checked before anything moves</b> — a route whose third
+                        step names a road that is gone never takes the first step. Windows are
+                        checked on arrival, because surfaces cannot be asked about in advance. When
+                        a track cannot proceed it is refused <b>by name</b>:
+                    </p>
+
+                    <div class="wrlbox"><span class="c">// the shell's own refusal codes</span>
+<span class="win">TRACK_EMPTY</span>        nothing recorded to drive
+<span class="win">TRACK_ROAD_GONE</span>    a step names a road that no longer exists
+<span class="win">TRACK_ROAD_CLOSED</span>  the road is there and will not admit you
+<span class="win">TRACK_WINDOW_GONE</span>  the surface it stood in has closed
+<span class="win">TRACK_BUSY</span>         something else is driving
+<span class="win">TRACK_REFUSED</span>      the step was not permitted</div>
+
+                    <p class="lead" style="margin-top: 1.6rem">
+                        <b>No silent repair.</b> A step whose road has vanished is refused and named;
+                        it is never quietly remapped to a road that looks similar. That is the
+                        difference the whole rung exists for — a macro would have carried on and done
+                        something plausible to the wrong thing.
+                    </p>
+
+                    <p class="lead">
+                        One consequence is worth the detail. A track records
+                        <b>arrivals, not inputs</b> — <code>park(road, z)</code> rather than forty
+                        notches of a scroll wheel. So the state after step <em>k</em> is fully
+                        described by step <em>k</em>, and stepping backwards through a replay means
+                        performing step <em>k−1</em> again rather than trying to reverse step
+                        <em>k</em>. Forty wheel deltas cannot be undone. One arrival can.
+                    </p>
+
+                    <div class="ladder">
+                        <div class="lrow head">
+                            <span>the piece</span><span>ships today</span><span>still missing</span>
+                        </div>
+                        <div class="lrow">
+                            <span class="lv">recording</span>
+                            <span class="road-c">append-only, capped, and the loss is counted</span>
+                            <span class="win-c">4 of ~15 verbs — no resize, no launch, no clicks</span>
+                        </div>
+                        <div class="lrow">
+                            <span class="lv">refusal</span>
+                            <span class="road-c">six typed codes, no silent repair</span>
+                            <span class="win-c">the check/use race is narrowed, not closed</span>
+                        </div>
+                        <div class="lrow">
+                            <span class="lv">precondition</span>
+                            <span class="road-c">hand-written, in JavaScript</span>
+                            <span class="win-c">sealed into the track, so it cannot be edited to weaken its own guard</span>
+                        </div>
+                        <div class="lrow">
+                            <span class="lv">address</span>
+                            <span class="road-c">a track is a thing on this machine</span>
+                            <span class="win-c">somewhere a stranger could drive to — no publish path at all</span>
+                        </div>
+                    </div>
+
+                    <p class="verdict">
+                        That last row is the one that matters commercially, and it is empty. A track
+                        you cannot hand to anybody is a personal convenience.
+                        <b>The claim worth making is that a track refuses</b> — and that part is
+                        standing, today, with the codes above printed by the shell rather than by
+                        this page.
+                    </p>
+                    <span class="tag no">no track can be published or addressed · that is not built</span>
+                </div>
+            </section>
+
+            <!-- ============ THE CERTIFICATE ============ -->
+            <!--
+                The numbers here are DERIVED, never typed: `node test/laws.mjs` and
+                `node test/compose-laws.mjs` count and print their own totals, because
+                the last time a law count was written by hand the published figure and
+                the real one drifted apart. Re-derived 2026-08-15 from a clean public
+                clone with no install step -- which is also the check offered below, so
+                it had to be run the same way a stranger would run it.
+            -->
+            <section id="cert">
+                <div class="wrap">
+                    <div class="kicker">The certificate</div>
+                    <h2>Feasible ▸ permitted ▸ best. <em>And three laws that do not hold.</em></h2>
+                    <p class="lead">
+                        <em>"May this proceed, and is it best?"</em> is normally answered by a person
+                        reading a diff. Underneath this stack it is answered by arithmetic, and the
+                        answer carries a certificate saying how it was reached.
+                    </p>
+
+                    <p class="lead">
+                        The kernel is eight small algebras in a fixed order — what <em>can</em>
+                        happen, how to rank it, what is <em>allowed</em>, what stays safe over time,
+                        whether the rules may themselves change, whether we know enough, who can
+                        ensure it, and whether we can afford it. One bridge composes them, floor
+                        first and gradient second, over a safety floor that cannot be weakened.
+                        <b>Nothing is ever chosen before it is permitted.</b>
+                    </p>
+
+                    <p class="lead">
+                        It carries <b>118 property-tested laws</b>, two thousand random trials each.
+                        That number is not typed into this page — the suites count themselves and
+                        print it, because the last time a law count was written out by hand the
+                        published figure and the real one drifted apart without anyone noticing.
+                    </p>
+
+                    <p class="lead">
+                        And <b>three laws do not hold.</b> They are declared open, they print
+                        FALSIFIED in red on every single run, and <b>the build fails if one of them
+                        ever starts passing</b> — because a gap that quietly closes is a gap nobody
+                        checked. All three concern the same operator, and whether the order you
+                        compose in can move the floor:
+                    </p>
+
+                    <div class="wrlbox"><span class="c">// open, and printed in red every run</span>
+<span class="rd">CP5</span>  the <span class="win">|&gt;</span> floor is association-invariant
+<span class="rd">CP6</span>  no backward execution step survives <span class="win">|&gt;</span>
+<span class="rd">CP7</span>  <span class="win">&amp;</span>-operand order does not change a downstream <span class="win">|&gt;</span> floor</div>
+
+                    <p class="lead" style="margin-top: 1.6rem">
+                        You do not have to take any of that on faith, and it costs about two minutes.
+                        There is no install step and there are no dependencies:
+                    </p>
+
+                    <div class="wrlbox"><span class="c">$</span> git clone https://github.com/c-u-l8er/AmpersandBoxDesign
+<span class="c">$</span> cd AmpersandBoxDesign/box-and-box
+<span class="c">$</span> node test/laws.mjs &amp;&amp; node test/compose-laws.mjs</div>
+
+                    <p class="lead" style="margin-top: 1.6rem">
+                        It prints 118 holding, three falsified, and the counterexample that broke
+                        each one — <em>a different counterexample most runs</em>, because the trials
+                        are random. The conformance surface is published at
+                        <a href="https://ampersandboxdesign.com/laws.html">ampersandboxdesign.com/laws.html</a>.
+                    </p>
+
+                    <p class="verdict">
+                        The laws hold against generators <em>we</em> wrote, which is the weak half of
+                        the claim: <b>nobody outside has tried to break the kernel.</b> The command
+                        above is the cheapest way anyone could, and a law we assert that you can
+                        falsify is worth more to us than the 118 that held.
+                    </p>
+                    <span class="tag in">118 enforced · 3 declared-open · re-derived 2026-08-15</span>
                 </div>
             </section>
 
@@ -1817,6 +2304,39 @@ sudo dd if=tandr.raw of=/dev/nvme0n1 bs=4M status=progress conv=fsync</div>
                             </p>
                         </div>
                         <div class="gap">
+                            <h3>Nothing leaves the machine</h3>
+                            <p>
+                                A track can be recorded, refused and replayed here, and there is no
+                                way to publish one or point anybody at it. The rung the whole ladder
+                                is built for has no implementation.
+                            </p>
+                        </div>
+                        <div class="gap">
+                            <h3>A guard that can be edited</h3>
+                            <p>
+                                What a track requires before it runs is hand-written JavaScript
+                                sitting beside it, not something sealed into the track's identity.
+                                Nothing yet stops a track being edited to weaken its own
+                                precondition.
+                            </p>
+                        </div>
+                        <div class="gap">
+                            <h3>Nobody has attacked the kernel</h3>
+                            <p>
+                                The 118 laws hold against generators we wrote ourselves. An
+                                adversary we did not write is a different test and it has never been
+                                run. <a href="#cert">That one takes two minutes.</a>
+                            </p>
+                        </div>
+                        <div class="gap">
+                            <h3>The loop has never run in one pass</h3>
+                            <p>
+                                Seven of the seven steps that take work from intent to verified
+                                result run on a developer machine. None of it has ever run
+                                end-to-end across deployed machines as a single pass.
+                            </p>
+                        </div>
+                        <div class="gap">
                             <h3>Nobody else has run it</h3>
                             <p>
                                 These are the first published images. Every measurement on this page
@@ -1899,6 +2419,45 @@ sudo dd if=tandr.raw of=/dev/nvme0n1 bs=4M status=progress conv=fsync</div>
                                 blank.
                             </p>
                         </aside>
+                    </div>
+
+                    <!--
+                        Boot report is rung one and stays the primary ask above. These are
+                        the other two. The third is listed precisely because it does not
+                        exist: a participation ladder that only showed the rungs we had
+                        built would misrepresent the shape of the thing being joined.
+                    -->
+                    <h3 class="steps-h">Three ways, and one of them isn't built.</h3>
+                    <div class="steps">
+                        <div class="step">
+                            <h3>Boot it</h3>
+                            <span class="cost">~20 minutes · the form above</span>
+                            <p>
+                                Run an image and say what happened. This is the only rung on the
+                                list we are structurally unable to climb ourselves, which is why it
+                                gets the whole section above.
+                            </p>
+                        </div>
+                        <div class="step">
+                            <h3>Break it</h3>
+                            <span class="cost">~2 minutes · no install</span>
+                            <p>
+                                Run the law suites and try to falsify something we assert holds.
+                                <a href="#cert">The command is up the page.</a> It already prints
+                                its own three failures — a fourth, found by you, would be worth more
+                                to us than the 118 that passed.
+                            </p>
+                        </div>
+                        <div class="step none">
+                            <h3>Drive it</h3>
+                            <span class="cost">does not exist yet</span>
+                            <p>
+                                Publish a track and have somebody else replay it. This is what the
+                                whole ladder is for and there is no publish path at all. It is
+                                listed here so the shape of the thing is honest, not because you can
+                                do it.
+                            </p>
+                        </div>
                     </div>
 
                     <p class="jn-foot">
