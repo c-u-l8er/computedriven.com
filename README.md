@@ -102,6 +102,22 @@ read side by side — blue panels are what you can do on arriving, green are way
 out, and the counter moves `1:0-2` → `1:2-2` between them. Keep them the same
 crop size or the comparison stops working.
 
+**The hero changed on 2026-08-16** from `tandr-three-apps.png` (three native
+GTK applications on the road) to `tandr-runefort.png` (a RuneFort layout as a
+pane), with `tandr-bendscript.png` replacing the `foot` terminal close-up.
+The two protocols now render inside the shell and that is the newer claim.
+
+**`tandr-three-apps.png` was NOT deleted — it moved into `#vehicle`.** Three
+paragraphs there are evidence-free without it, and "unmodified native GTK
+applications, on the road, with no `/dev/dri`" is the hardest thing on this page
+to fake. If you are tempted to remove it, read the section first: it is the
+photograph that argument is about, and the `og:image` used to point at it.
+
+The trade is worth stating because it is a real loss: the three-apps frame is
+the better *"what the hell is this"* image, and the hero now leads with a claim
+that reads as a normal UI until you notice it is standing on a road. That was
+Travis's call, 2026-08-16.
+
 **Taking new ones:** drive the shell from source (`npm run m0`, port 8911) with
 `window.__op({op:'park', road:'<lane>', z:<n>})` — entrance gantries sit at
 `z=-180`, exits at `z=-2140`, and `__gantry()` reports both. **Feed the idle

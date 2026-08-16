@@ -16,12 +16,12 @@
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://computedriven.com/" />
-        <meta property="og:image" content="https://computedriven.com/img/tandr-three-apps.png" />
-        <meta property="og:image:width" content="1920" />
-        <meta property="og:image:height" content="1080" />
+        <meta property="og:image" content="https://computedriven.com/img/tandr-runefort.png" />
+        <meta property="og:image:width" content="940" />
+        <meta property="og:image:height" content="529" />
         <meta
             property="og:image:alt"
-            content="The Travel &amp; RRABBIT shell at 4K: three of the operating system's own programs standing as windows along a dark road, above seven amber gauge tubes"
+            content="A RuneFort layout standing as a window on the road in the Travel &amp; RRABBIT shell — a tile grid of rooms, claims, neighbors and state bindings, above seven amber gauge tubes"
         />
         <meta name="twitter:card" content="summary_large_image" />
 
@@ -1449,16 +1449,18 @@
                     </div>
                     <figure class="shot">
                         <img
-                            src="img/tandr-three-apps.png"
-                            alt="The Travel &amp; RRABBIT shell at 4K: three of the operating system's own programs standing as windows along a dark road — a foot terminal, a Mousepad editor, and a Save As file chooser — above seven amber gauge tubes labelled CPU, RAM, SWAP, DISK, NET, TEMP and LOAD"
-                            width="1920"
-                            height="1080"
+                            src="img/tandr-runefort.png"
+                            alt="A RuneFort layout standing as a window on the road, titled What is Runefort? · Concept — a tile grid of rooms labelled rooms, claims, neighbors and state bindings, above the shell's seven amber gauge tubes for CPU, RAM, SWAP, DISK, NET, TEMP and LOAD, a gear selector and a DRIVE gauge"
+                            width="940"
+                            height="529"
                             fetchpriority="high"
                         />
                         <figcaption>
-                            three of the operating system's own programs, as windows on the road —
-                            2026-08-14, a 4 GB / 4 vCPU guest at 3840×2160 with no GPU and no
-                            <code>/dev/dri</code>: software EGL, software H.264
+                            a <b>RuneFort</b> layout standing on the road — rooms, claims,
+                            neighbors and state bindings, compiled to a grid at author time rather
+                            than laid out by an engine at run time. 2026-08-16, 16.7 ms/frame.
+                            <b>The pane is not a process</b>: it is a document the shell draws, so
+                            the road can carry thousands of them.
                         </figcaption>
                     </figure>
                 </div>
@@ -1561,9 +1563,8 @@
 <span class="win">[spinner:sp]</span> <span class="rd">--socket--&gt;</span> <span class="win">[orb:ob]</span></div>
 
                     <p class="lead" style="margin-top: 1.6rem">
-                        Now look at the shell in the picture at the top of this page: windows
-                        standing as signs along a road you drive through. <b>That is the same
-                        drawing.</b> Not a metaphor borrowed for the marketing — the language,
+                        Now look at the shell in any photograph on this page: panes standing as
+                        signs along a road you drive through. <b>That is the same drawing.</b> Not a metaphor borrowed for the marketing — the language,
                         the runtime, the evidence and the interface are all the same two things.
                     </p>
 
@@ -1738,12 +1739,34 @@
                     </p>
 
                     <p class="lead">
-                        The three programs in the photograph at the top of this page are not web
-                        pages and were not modified to appear there: a <code>foot</code> terminal, a
-                        Mousepad editor and a GTK file chooser, in a 4 GB guest at 3840×2160 with no
-                        GPU and no <code>/dev/dri</code> — software EGL, software H.264, and the
-                        frames arrive.
+                        The three programs below are not web pages and were not modified to appear
+                        there: a <code>foot</code> terminal, a Mousepad editor and a GTK file
+                        chooser, in a 4 GB guest at 3840×2160 with no GPU and no
+                        <code>/dev/dri</code> — software EGL, software H.264, and the frames arrive.
                     </p>
+
+                    <!--
+                        This photograph was the hero until 2026-08-16. It moved here because this
+                        is the section whose argument it proves, and the hero now shows the newer
+                        claim (documents and layouts as panes that are not processes). Do not
+                        delete it: three paragraphs in this section are evidence-free without it,
+                        and "native GTK applications, unmodified, on the road" is the single
+                        hardest thing on this page to fake.
+                    -->
+                    <figure class="shot" style="margin: 1.6rem 0">
+                        <img
+                            src="img/tandr-three-apps.png"
+                            alt="The Travel &amp; RRABBIT shell at 4K: three of the operating system's own programs standing as windows along a dark road — a foot terminal, a Mousepad editor, and a Save As file chooser — above seven amber gauge tubes labelled CPU, RAM, SWAP, DISK, NET, TEMP and LOAD"
+                            width="1920"
+                            height="1080"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            three of the operating system's own programs, as windows on the road —
+                            2026-08-14, a 4 GB / 4 vCPU guest at 3840×2160 with no GPU and no
+                            <code>/dev/dri</code>: software EGL, software H.264
+                        </figcaption>
+                    </figure>
 
                     <p class="lead">
                         What the vehicle buys is the two things a page in a tab does not have: an
@@ -1759,7 +1782,7 @@
                         a decade ago. <b>A vehicle is a wrapper around one</b> — and the wrapper is
                         where the address, the rules and the certificate live.
                     </p>
-                    <span class="tag in">the shell runs · the picture at the top of this page is it</span>
+                    <span class="tag in">the shell runs · the photograph above is it</span>
                 </div>
             </section>
 
@@ -2429,8 +2452,22 @@ sudo dd if=tandr.raw of=/dev/nvme0n1 bs=4M status=progress conv=fsync</div>
                             </figcaption>
                         </figure>
                         <figure class="shot">
-                            <img src="img/tandr-foot.png" alt="A close view of one window on the road: a foot terminal showing a FreeBSD shell prompt with the output of an ls command" loading="lazy" />
-                            <figcaption>a FreeBSD terminal, decoded into a sign on the road</figcaption>
+                            <img
+                                src="img/tandr-bendscript.png"
+                                alt="A BendScript document standing as a window on the road, titled All nine core predicates, listing nine typed edges: cites, supports, contradicts, derives-from, supersedes, transcludes, responds-to, defines and one more, each pointing at a bend: content address. The road's gate board stands beside it."
+                                width="1120"
+                                height="630"
+                                loading="lazy"
+                            />
+                            <figcaption>
+                                a <b>BendScript</b> document as a window — nine typed edges
+                                (<code>cites</code>, <code>contradicts</code>,
+                                <code>supersedes</code>, <code>transcludes</code>…) each pointing at
+                                a content address, not a URL. <b>It is not a process.</b> A
+                                <code>.bend</code> document averages <b>1,067 bytes</b> against the
+                                ~3 MB a native window costs in VRAM, which is why thousands of
+                                these is a different conversation from dozens of applications.
+                            </figcaption>
                         </figure>
                         <figure class="shot">
                             <img
