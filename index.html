@@ -6,7 +6,7 @@
         <title>ComputeDriven — keep the computation</title>
         <meta
             name="description"
-            content="ComputeDriven is a systems studio building software whose claims you can derive again yourself. A claim is compute driven when the artifact carries enough — canonical input, executable semantics, a derived identity and its provenance — for an independent machine to derive it again. First proof: T&R, a 364 MB FreeBSD 15 distribution you can download."
+            content="ComputeDriven is a systems studio building software whose claims you can derive again yourself. A claim is compute driven when the artifact carries enough — canonical input, executable semantics, a derived identity and its provenance — for an independent machine to derive it again. First proof: T&R, a FreeBSD 15 distribution that ships with its own verifier, downloadable now."
         />
         <link rel="canonical" href="https://computedriven.com/" />
         <meta property="og:title" content="ComputeDriven — keep the computation" />
@@ -16,7 +16,14 @@
         />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://computedriven.com/" />
-        <meta property="og:image" content="https://computedriven.com/img/tandr-runefort.png" />
+        <!--
+            JPEG, deliberately, and the only one on the site. Every figure below is
+            WebP; this file exists because link-preview crawlers are the one client
+            that still cannot be assumed to decode it, and a card that fails to
+            render is the whole reason og:image was added. Same frame as the hero,
+            59 KB. Regenerate it whenever the hero changes.
+        -->
+        <meta property="og:image" content="https://computedriven.com/img/og-card.jpg" />
         <meta property="og:image:width" content="940" />
         <meta property="og:image:height" content="529" />
         <meta
@@ -664,7 +671,13 @@
                 font-size: 0.82rem;
                 margin-top: 0.5rem;
             }
-            .ab .tag {
+            /* Bare `.tag`, not `.ab .tag`. The box was scoped to the stack cards, so
+               every standalone tag on the page — the ladder's "rungs 4-5 are not
+               built", the tracks section's "no track can be published", the
+               certificate's law count — rendered as 17px body text in a colour
+               instead of a small chip. They read as sentences the eye skips rather
+               than as the status stamps they are. Found 2026-08-16. */
+            .tag {
                 display: inline-block;
                 margin-top: 0.6rem;
                 font-family: var(--mono);
@@ -708,6 +721,53 @@
                 color: var(--dim);
                 font-size: 0.85rem;
                 margin-top: 0.3rem;
+            }
+
+            /* ---------- the pane bench ----------
+               A measurement, so it looks like one: mono, right-aligned numbers, no
+               chrome. The point of the table is the column that does not move. */
+            .bench {
+                margin-top: 1.4rem;
+                border: 1px solid var(--border-soft);
+                border-radius: 8px;
+                background: var(--surface);
+                overflow-x: auto;
+            }
+            .bench table {
+                width: 100%;
+                border-collapse: collapse;
+                font-family: var(--mono);
+                font-size: 0.76rem;
+                white-space: nowrap;
+            }
+            .bench th,
+            .bench td {
+                padding: 0.5rem 0.85rem;
+                text-align: right;
+                border-bottom: 1px solid var(--border-soft);
+            }
+            .bench th:first-child,
+            .bench td:first-child {
+                text-align: left;
+            }
+            .bench th {
+                color: var(--muted);
+                font-weight: 400;
+                font-size: 0.64rem;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+            }
+            .bench tr:last-child td {
+                border-bottom: none;
+            }
+            .bench td {
+                color: var(--dim);
+            }
+            .bench td.key {
+                color: var(--text);
+            }
+            .bench td.flat {
+                color: var(--cyan);
             }
 
             /* ---------- T&R Cloud tiers ----------
@@ -1449,7 +1509,7 @@
                     </div>
                     <figure class="shot">
                         <img
-                            src="img/tandr-runefort.png"
+                            src="img/tandr-runefort.webp"
                             alt="A RuneFort layout standing as a window on the road, titled What is Runefort? · Concept — a tile grid of rooms labelled rooms, claims, neighbors and state bindings, above the shell's seven amber gauge tubes for CPU, RAM, SWAP, DISK, NET, TEMP and LOAD, a gear selector and a DRIVE gauge"
                             width="940"
                             height="529"
@@ -1460,7 +1520,8 @@
                             neighbors and state bindings, compiled to a grid at author time rather
                             than laid out by an engine at run time. 2026-08-16, 16.7 ms/frame.
                             <b>The pane is not a process</b>: it is a document the shell draws, so
-                            the road can carry thousands of them.
+                            the road carries a lot of them —
+                            <a href="#panes">10,000, measured, at the same 16.7 ms</a>.
                         </figcaption>
                     </figure>
                 </div>
@@ -1760,7 +1821,7 @@
                     -->
                     <figure class="shot" style="margin: 1.6rem 0">
                         <img
-                            src="img/tandr-papers.png"
+                            src="img/tandr-papers.webp"
                             alt="The Travel &amp; RRABBIT shell at 5K: two BendScript documents standing as windows along a dark road — one titled All nine core predicates listing nine typed edges, one titled On the Closed Memory Loop listing five phases — with a third as a distant card. In front of the instrument panel the left document is also open flat at 1:1 in a reading pane with a delete button. Mirrors read NO REAR VIEW and NO REEL IN THE GLASS."
                             width="5120"
                             height="2880"
@@ -1775,8 +1836,9 @@
                             <code>contradicts</code>, <code>supersedes</code>,
                             <code>transcludes</code> — each pointing at a content address rather than
                             a URL. A <code>.bend</code> document averages <b>1,067 bytes</b> against
-                            the ~3 MB a native window costs in VRAM, which is why thousands of these
-                            is a different conversation from dozens of applications.
+                            the ~3 MB a native window costs in VRAM — and
+                            <a href="#panes">the road was driven with 10,000 of them on it</a>,
+                            which is a different conversation from dozens of applications.
                             <br /><br />
                             <b>The pane across the bottom is the same document flattened to 1:1</b> —
                             the window you were driving past, standing still under you, with the
@@ -1786,6 +1848,77 @@
                             exists now, and the camera still does not.
                         </figcaption>
                     </figure>
+
+                    <!--
+                        This table exists because a reviewer refused the sentence it replaced.
+                        The page used to say the road "can carry thousands of them", reasoning
+                        from 1,067 bytes per document — and payload size does not prove scene,
+                        draw-call or input scalability. It was the one claim on the page arguing
+                        from architecture instead of from a measurement, which is the failure this
+                        whole site is about. So it was measured. Re-run it the same way: place N
+                        panes on the unslotted bench path, settle, then take 80 rAF deltas and
+                        report the median of the last 60.
+                    -->
+                    <div id="panes">
+                        <p class="lead" style="margin-top: 2rem">
+                            <b>That claim used to read "thousands", from arithmetic.</b> Bytes per
+                            document do not prove that a scene can draw them, so it was measured
+                            instead — one session, panes added without clearing, frame time from 80
+                            <code>requestAnimationFrame</code> deltas with the first 20 discarded.
+                        </p>
+
+                        <div class="bench">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>panes on the road</th>
+                                        <th>median ms/frame</th>
+                                        <th>objects in the scene</th>
+                                        <th>painted at once</th>
+                                        <th>JS heap</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td class="key">0</td><td class="flat">16.7</td><td>0</td><td>—</td><td>—</td></tr>
+                                    <tr><td class="key">1</td><td class="flat">16.7</td><td>3</td><td>1</td><td>—</td></tr>
+                                    <tr><td class="key">10</td><td class="flat">16.7</td><td>30</td><td>10</td><td>—</td></tr>
+                                    <tr><td class="key">100</td><td class="flat">16.8</td><td>300</td><td>24</td><td>—</td></tr>
+                                    <tr><td class="key">1,000</td><td class="flat">16.7</td><td>678</td><td>24</td><td>67 MB</td></tr>
+                                    <tr><td class="key">3,000</td><td class="flat">16.8</td><td>678</td><td>24</td><td>85 MB</td></tr>
+                                    <tr><td class="key">10,000</td><td class="flat">16.7</td><td>678</td><td>24</td><td>130 MB</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p class="legend">
+                            2026-08-16, one machine, 1600×900, shell running from source. The same
+                            10,000 panes <b>while driving</b>: median <b>16.7 ms</b>, 95th
+                            percentile <b>40.7 ms</b> against 37.5 stationary. Placing the last
+                            7,000 took <b>4 ms</b>.
+                        </p>
+
+                        <p class="verdict">
+                            <b>The column that matters is the second one, because it does not
+                            move.</b> Panes go up by four orders of magnitude and the frame time
+                            does not — the scene stops growing at 678 objects and never paints more
+                            than 24 at a time, because everything further away is a card and
+                            everything past that is not drawn at all. Cost tracks
+                            <em>what you can see</em>, not what exists.
+                        </p>
+
+                        <p class="legend">
+                            <b>What this does not show, said plainly.</b> All 10,000 panes are three
+                            sample documents recycled, so the texture atlas holds far less than
+                            10,000 distinct documents would — it stayed flat at 48 MB throughout,
+                            and a corpus of genuinely different documents is the obvious next
+                            measurement and has not been taken. They were placed on the bench path,
+                            which skips the dash-slot rule real windows obey. One machine, one
+                            browser, and nobody else has run it.
+                        </p>
+                        <span class="tag in"
+                            >10,000 panes · 16.7 ms · measured 2026-08-16 · 3 distinct documents</span
+                        >
+                    </div>
 
                     <p class="lead">
                         What the vehicle buys is the two things a page in a tab does not have: an
@@ -1819,14 +1952,15 @@
 
                     <figure class="shot" style="margin: 2rem 0">
                         <img
-                            src="img/tandr-map.png"
+                            src="img/tandr-map.webp"
                             alt="The road map: a graph of three workspaces named home, build and watch with directed arrows between them, and a side panel listing each window with its address, side and pixel size"
                             loading="lazy"
                         />
                         <figcaption>
                             the same three windows, addressed — <code>(foot) home:1 · left ·
                             816×312</code>. Rows are hops from the root; an arrow pointing back up
-                            a row is a loop.
+                            a row is a loop. Photographed 2026-08-14, alongside the native-window
+                            frame it shares its addresses with.
                         </figcaption>
                     </figure>
 
@@ -1839,7 +1973,7 @@
                     <div class="shots two">
                         <figure class="shot">
                             <img
-                                src="img/tandr-gate-enter.png"
+                                src="img/tandr-gate-enter.webp"
                                 alt="The entrance gantry of a road: a board reading T&amp;R and the arrow --build--&gt; on the first row, 1:0-2 and the bracketed word [main] on the second, above three blue panels reading back to home, left open window, and right open window"
                                 width="800"
                                 height="300"
@@ -1856,7 +1990,7 @@
                         </figure>
                         <figure class="shot">
                             <img
-                                src="img/tandr-gate-exit.png"
+                                src="img/tandr-gate-exit.webp"
                                 alt="The exit gantry of the same road: the same T&amp;R --build--&gt; board now reading 1:2-2, above three panels reading home, back to the entrance, and plus lane new workspace"
                                 width="800"
                                 height="300"
@@ -2025,7 +2159,7 @@
                     -->
                     <figure class="shot" style="margin: 1.8rem 0; max-width: 800px">
                         <img
-                            src="img/tandr-reel.png"
+                            src="img/tandr-reel.webp"
                             alt="The reel: a table of tracks with columns for name, the road each is parked on, trail length and recording length, and per-track buttons reading here, replay, walk, clear rec and delete. Below it a make control accepting 1 to 999. The road and its documents are dimmed behind the overlay."
                             width="1600"
                             height="820"
@@ -2191,7 +2325,7 @@
             <section id="get">
                 <div class="wrap">
                     <div class="kicker">Get it</div>
-                    <h2>Two images. Pick the one you need.</h2>
+                    <h2>Two downloads, one build.</h2>
                     <p class="legend" style="margin-bottom: 0.4rem">
                         <b>One release, <code>v0.3</code>, holding two images.</b> The file names
                         carry the image version, not the release version — so
@@ -2201,7 +2335,7 @@
                         <code>trvs</code> in it.
                     </p>
                     <div class="flavours">
-                        <div class="fl pick">
+                        <div class="fl">
                             <h3>Server</h3>
                             <div class="big">364 MB</div>
                             <div class="pk">50 packages · T&amp;R 0.2</div>
@@ -2218,7 +2352,7 @@
                             <div class="sha">sha256 9e8767be0140ac5515fedafabdd156e5c9323619285ec12790e29557c422023e</div>
                         </div>
 
-                        <div class="fl">
+                        <div class="fl pick">
                             <h3>Server + verifier</h3>
                             <div class="big">626 MB</div>
                             <div class="pk">56 packages · T&amp;R 0.3</div>
@@ -2286,11 +2420,24 @@
                                 firmware — the path below is Arch; Debian uses
                                 <code>/usr/share/OVMF/OVMF_CODE.fd</code>.
                             </p>
-                            <div class="cmd"><button class="copy">copy</button><span class="c"># one command, straight from the download</span>
+                            <!--
+                                This said tandr-0.2.qcow2 while the hero downloaded 0.3, so the
+                                shortest path through the page -- download, click "How to run it",
+                                copy -- ended in "file not found". Corrected 2026-08-16. If the
+                                hero's file ever changes again, this line changes with it; they
+                                are one journey and there is no mechanism keeping them in step.
+                            -->
+                            <div class="cmd"><button class="copy">copy</button><span class="c"># one command, straight from the download above</span>
 qemu-system-x86_64 -m 2048 -smp 2 -cpu host -enable-kvm \
-  -drive file=tandr-0.2.qcow2,if=virtio \
+  -drive file=tandr-0.3.qcow2,if=virtio \
   -bios /usr/share/edk2/x64/OVMF.4m.fd \
   -nographic</div>
+                            <p class="note" style="margin: 0.8rem 0 0">
+                                That is the <b>626 MB</b> image, the one the button at the top of
+                                this page hands you and the only one with <code>trvs</code> aboard.
+                                Running the 364 MB server image instead is the same command with
+                                <code>tandr-0.2.qcow2</code> in it.
+                            </p>
                             <p class="note" style="margin: 1rem 0 0">
                                 Prefer something that manages instances for you?
                                 <a href="https://github.com/c-u-l8er/PARKVPS">PARKVPS</a> runs these
@@ -2308,7 +2455,7 @@ qemu-system-x86_64 -m 2048 -smp 2 -cpu host -enable-kvm \
                                 disk.
                             </div>
                             <div class="cmd"><button class="copy">copy</button><span class="c"># 1. qcow2 is a virtual-disk format; a USB stick needs raw bytes</span>
-qemu-img convert -f qcow2 -O raw tandr-0.2.qcow2 tandr.raw</div>
+qemu-img convert -f qcow2 -O raw tandr-0.3.qcow2 tandr.raw</div>
                             <div class="cmd"><button class="copy">copy</button><span class="c"># 2. find the stick — confirm the size matches the one you plugged in</span>
 lsblk -o NAME,SIZE,MODEL,TRAN</div>
                             <div class="cmd"><button class="copy">copy</button><span class="c"># 3. write it. replace sdX. this erases sdX entirely.</span>
@@ -2329,12 +2476,12 @@ sudo dd if=tandr.raw of=/dev/sdX bs=4M status=progress conv=fsync</div>
                                 currently running.
                             </div>
                             <div class="cmd"><button class="copy">copy</button><span class="c"># from a live environment, not from the system you are overwriting</span>
-qemu-img convert -f qcow2 -O raw tandr-0.2.qcow2 tandr.raw
+qemu-img convert -f qcow2 -O raw tandr-0.3.qcow2 tandr.raw
 lsblk -o NAME,SIZE,MODEL,TRAN
 sudo dd if=tandr.raw of=/dev/nvme0n1 bs=4M status=progress conv=fsync</div>
                             <p class="note" style="margin: 1rem 0 0">
-                                The root filesystem grows to fill the disk on first boot, so a 364 MB
-                                image becomes a whole drive without further work. The image finds its
+                                The root filesystem grows to fill the disk on first boot, so a
+                                626 MB image becomes a whole drive without further work. The image finds its
                                 root by GPT label rather than device name, which is why it does not
                                 care whether it lands on <code>vtbd0</code>, <code>ada0</code> or
                                 <code>nvd0</code>.
@@ -2480,7 +2627,7 @@ sudo dd if=tandr.raw of=/dev/nvme0n1 bs=4M status=progress conv=fsync</div>
 
                     <div class="shots">
                         <figure class="shot">
-                            <img src="img/tandr-greeter.jpg" alt="The Travel &amp; RRABBIT login screen: a checkered planet over an interchange of glowing roads, with a small instrument panel reading T &amp; R, Travel &amp; RRABBIT, and fields for USER and KEY above an IGNITION button" loading="lazy" />
+                            <img src="img/tandr-greeter.webp" alt="The Travel &amp; RRABBIT login screen: a checkered planet over an interchange of glowing roads, with a small instrument panel reading T &amp; R, Travel &amp; RRABBIT, and fields for USER and KEY above an IGNITION button" loading="lazy" />
                             <!--
                                 Every other figure on this page states its date, machine and
                                 rendering path. This one could not, because nobody recorded where
@@ -2497,7 +2644,7 @@ sudo dd if=tandr.raw of=/dev/nvme0n1 bs=4M status=progress conv=fsync</div>
                         </figure>
                         <figure class="shot">
                             <img
-                                src="img/tandr-dash.png"
+                                src="img/tandr-dash.webp"
                                 alt="The full instrument cluster: a FRAME gauge reading 16.7 ms/frame, a lane panel reading build, seven amber gauge tubes for CPU RAM SWAP DISK NET TEMP and LOAD, a steering wheel, a P-R-C-D gear selector, and a DRIVE gauge. Two mirrors read NO REAR VIEW and NO REEL IN THE GLASS."
                                 width="1920"
                                 height="560"
@@ -2825,8 +2972,9 @@ sudo dd if=tandr.raw of=/dev/nvme0n1 bs=4M status=progress conv=fsync</div>
                             <p class="jn-count">
                                 Reports received: <b>0</b><br />
                                 From real hardware: <b>0</b><br />
-                                <b>Counted by hand on 11 August 2026</b> — nothing on this page
-                                fetches at runtime, so this is a reading and not a counter.
+                                <b>Counted on 16 August 2026</b> — against the issue search below,
+                                which returned <code>total_count: 0</code>. Nothing on this page
+                                fetches <b>on load</b>, so this is a reading and not a counter.
                                 <a
                                     href="https://github.com/c-u-l8er/travel-and-rrabbit/issues?q=label%3Aboot-report"
                                     >Count them yourself →</a
@@ -2895,6 +3043,15 @@ sudo dd if=tandr.raw of=/dev/nvme0n1 bs=4M status=progress conv=fsync</div>
                         for releases, or take the
                         <a href="https://github.com/c-u-l8er/travel-and-rrabbit/releases.atom">feed</a>.
                         Anything that is not a boot report goes here instead:
+                    </p>
+
+                    <p class="legend" style="margin-bottom: 0.9rem">
+                        <b>Naming the one third party, since the hero says "no telemetry".</b> This
+                        form posts to <code>formspree.io</code>. It is the only request this page
+                        ever makes to anyone — nothing fetches on load, the fonts are served from
+                        here, and no analytics exist — but it is a request, it carries what you
+                        typed, and it fires when <em>you</em> press the button rather than when the
+                        page opens. That is a different thing from telemetry, and it is not nothing.
                     </p>
 
                     <!--

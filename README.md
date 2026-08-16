@@ -83,6 +83,31 @@ is about. Failures print the reason the endpoint gave, and the typed message
 survives so it can be retried. If you touch that handler, keep the three paths
 honest: server error, network failure, success.
 
+## Images are WebP, and the one JPEG is deliberate
+
+**Measured 2026-08-16: `img/` was 11.43 MB, and 8.08 MB of it was the greeter
+alone** — a 5120×2880 PNG of stylised artwork, which is the wrong codec for that
+content by an order of magnitude. The head was advertising 53,720 bytes of
+self-hosted fonts on a page shipping eleven megabytes of screenshots.
+
+Everything is WebP q90 now. **1.13 MB, down 90.1%**, and the conversion was
+checked rather than assumed: RMSE against the PNGs is 0.4–0.6%, and the greeter's
+darkest gradient — where banding would show first on a page this dark — was
+compared crop-to-crop at 1:1. Lossless WebP was measured too and only reaches
+~55–63% of PNG, so the saving is genuinely in the lossy step.
+
+**`img/og-card.jpg` is the exception and must stay a JPEG.** Link-preview
+crawlers are the one client that cannot be assumed to decode WebP, and a card
+that fails to render is the entire reason `og:image` exists. It is the hero
+frame at 59 KB. **Regenerate it whenever the hero image changes** — nothing
+checks that it matches.
+
+If you drop a new screenshot in, convert it:
+
+```
+magick img/whatever.png -quality 90 -define webp:method=6 img/whatever.webp
+```
+
 ## Screenshots
 
 `img/` holds only figures that show the current shell. The 2026-08-09 batch —
