@@ -118,16 +118,26 @@ the better *"what the hell is this"* image, and the hero now leads with a claim
 that reads as a normal UI until you notice it is standing on a road. That was
 Travis's call, 2026-08-16.
 
-### `tandr-three-apps.png` is stale and could not be re-shot — OPEN
+### `tandr-three-apps.png` was retired, not re-shot — 2026-08-16
 
-Its right mirror reads *"C · CAMERA and R · REEL are not built"*. **The reel
-shipped**, and the shell now renders *"NO REEL IN THE GLASS · shift to R for the
-reel"* with `R · the reel` added to the hint line. The caption says so in place
-rather than letting the picture assert it, because retracting in place beats
-publishing a frame that contradicts the ladder two sections above it.
+Its right mirror read *"C · CAMERA and R · REEL are not built"*. **The reel
+shipped**, so the page was publishing a frame that contradicted the ladder two
+sections above it. It was deleted rather than annotated, and `#vehicle` now
+carries `tandr-papers.png` — the same shell on the day the page was edited,
+carrying two `.bend` documents where the applications stood.
 
-**Re-shooting it needs a native application on the road, and that is blocked by
-two separate faults found on 2026-08-16:**
+**The native-application claim survives as a dated sentence with no photograph**,
+which is how this page treats every other claim it cannot currently show. Do not
+quietly restore a picture for it; either re-shoot one or leave the date.
+
+`tandr-reel.png` was added to `#tracks` for the same reason: the ladder marks
+TRACK and REPLAY `live_local` and there was no picture of the instrument that
+proves it. It shows **one** track. A busier reel is a better picture and exactly
+the same claim — if you replace it, keep the caption's "this shell has one track
+on it" honest to whatever the new frame shows.
+
+**A current native-application photograph is still wanted, and is blocked by two
+separate faults found on 2026-08-16:**
 
 1. **`RRABBIT/proxy/applications.json` points `/tandr-tr4-foot` at ssh port
    `2223`. The running `tr4` guest forwards `2224`.** Nothing listens on 2223 —
