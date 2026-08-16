@@ -15,8 +15,8 @@ page calls out at load, and the page still renders and downloads work with
 **That sentence was false until 2026-08-16 and had been for as long as it
 existed.** The head carried a `fonts.googleapis.com` stylesheet, so every
 visitor made a request to Google that logged their IP before a single word
-rendered — on a page whose hero says *no telemetry* and whose headline product
-feature is *no first-boot download*. The fonts are self-hosted now:
+rendered — on a page whose headline product feature is *no first-boot download*.
+The fonts are self-hosted now:
 `fonts/space-grotesk.woff2` and `fonts/jetbrains-mono.woff2`, latin subset,
 **53,720 bytes for both**. Verified with `performance.getEntriesByType('resource')`
 — zero entries outside the origin.
@@ -82,6 +82,34 @@ thanks you on submit and drops the message is precisely the failure this site
 is about. Failures print the reason the endpoint gave, and the typed message
 survives so it can be retried. If you touch that handler, keep the three paths
 honest: server error, network failure, success.
+
+## The page does not claim "no telemetry", and cannot
+
+**Removed 2026-08-16, the day it was found false.** A real browser loading
+`computedriven.com` fetches `static.cloudflareinsights.com/beacon.min.js`. It is
+**not in `index.html`** and **not in the HTML the server returns to `curl`** —
+the host injects it at the edge, so neither reading the repository nor curling
+the site reveals it. It took driving the live domain in a real browser and
+listing `performance.getEntriesByType('resource')`.
+
+Travis's call, and the right one: **remove the claim rather than defend it.**
+Any host can do this, the switch is not in this repository, and a promise you
+cannot audit from your own source is not a promise. The download line under the
+hero now reads `free · no account · nothing to sign up for` — that describes the
+file, which can keep its promises.
+
+The contact section names both third parties in full: the form's `formspree.io`
+POST and the injected beacon. **Do not re-add "no telemetry" anywhere** without
+first re-running the check below and confirming the beacon is gone.
+
+```
+agent-browser open https://computedriven.com/
+agent-browser eval "performance.getEntriesByType('resource').map(r=>new URL(r.name).host).filter(h=>h!=='computedriven.com')"
+```
+
+**The general lesson, worth more than the fix:** this page verifies itself by
+reading its own tree, and a hosted site is not its tree. Anything the platform
+injects is invisible to every check that runs locally.
 
 ## Images are WebP, and the one JPEG is deliberate
 

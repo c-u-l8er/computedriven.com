@@ -33,12 +33,16 @@
         <meta name="twitter:card" content="summary_large_image" />
 
         <!--
-            Self-hosted, and the reason is the page's own argument. The hero says
-            "no telemetry" and the operating system's headline property is "no
-            first-boot download" — a page that then makes a first-boot download to
-            a third party, one that logs the visitor's IP, is not the kind of
-            artifact this site is about. Two variable woff2 files, 53,720 bytes
-            total, latin subset only.
+            Self-hosted, and the reason is the page's own argument: the operating
+            system's headline property is "no first-boot download", and a page that
+            then makes a first-boot download to a third party, one that logs the
+            visitor's IP, is not the kind of artifact this site is about. Two
+            variable woff2 files, 53,720 bytes total, latin subset only.
+
+            This comment used to cite the hero's "no telemetry" as a second reason.
+            That claim is gone as of 2026-08-16 — the host injects an analytics
+            beacon the source cannot see. Self-hosting the fonts is still right; it
+            just no longer gets to point at a promise the page could not keep.
 
             Both families ship ONE file covering the whole weight range: Google
             served byte-identical woff2 for every weight requested (verified by
@@ -1496,7 +1500,14 @@
                             <a class="btn-ghost" href="#run">How to run it →</a>
                         </div>
                         <div class="dl-meta">
-                            free · no account · no telemetry<br />
+                            <!--
+                                "no telemetry" was here until 2026-08-16 and was never a claim
+                                this page could keep: the host injects an analytics beacon that
+                                is not in the source, and any host can. Removed rather than
+                                defended. What is left describes the DOWNLOAD, which is a file
+                                and can keep its promises.
+                            -->
+                            free · no account · nothing to sign up for<br />
                             <code
                                 >sha256
                                 7e0f027db3da721b7f0210c4d5101e2acf872e77036c088f53c1ad8fafc820f9</code
@@ -3045,13 +3056,24 @@ sudo dd if=tandr.raw of=/dev/nvme0n1 bs=4M status=progress conv=fsync</div>
                         Anything that is not a boot report goes here instead:
                     </p>
 
+                    <!--
+                        This used to open "since the hero says no telemetry". The hero no longer
+                        says it. Measured 2026-08-16 on the live site: a real browser fetches
+                        static.cloudflareinsights.com/beacon.min.js, which is not in this file and
+                        not in the HTML the server hands to curl -- the host injects it at the
+                        edge. The claim was removed rather than defended, because any host can do
+                        that and a page cannot audit it by reading its own repository.
+                    -->
                     <p class="legend" style="margin-bottom: 0.9rem">
-                        <b>Naming the one third party, since the hero says "no telemetry".</b> This
-                        form posts to <code>formspree.io</code>. It is the only request this page
-                        ever makes to anyone — nothing fetches on load, the fonts are served from
-                        here, and no analytics exist — but it is a request, it carries what you
-                        typed, and it fires when <em>you</em> press the button rather than when the
-                        page opens. That is a different thing from telemetry, and it is not nothing.
+                        <b>What this page loads from other people, in full.</b> Two things. The form
+                        below posts to <code>formspree.io</code> when <em>you</em> press the button,
+                        carrying what you typed. And the host injects an analytics beacon from
+                        <code>static.cloudflareinsights.com</code> on every visit — that one is not
+                        in this page's source and is not ours to switch off from here.
+                        <b>Being hosted is a dependency too</b>, which is why the download button no
+                        longer promises no telemetry: that was a claim about a file, printed on a
+                        website, and the website could not keep it. Everything else — fonts
+                        included — is served from this domain.
                     </p>
 
                     <!--
