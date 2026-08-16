@@ -118,6 +118,38 @@ the better *"what the hell is this"* image, and the hero now leads with a claim
 that reads as a normal UI until you notice it is standing on a road. That was
 Travis's call, 2026-08-16.
 
+### `tandr-three-apps.png` is stale and could not be re-shot — OPEN
+
+Its right mirror reads *"C · CAMERA and R · REEL are not built"*. **The reel
+shipped**, and the shell now renders *"NO REEL IN THE GLASS · shift to R for the
+reel"* with `R · the reel` added to the hint line. The caption says so in place
+rather than letting the picture assert it, because retracting in place beats
+publishing a frame that contradicts the ladder two sections above it.
+
+**Re-shooting it needs a native application on the road, and that is blocked by
+two separate faults found on 2026-08-16:**
+
+1. **`RRABBIT/proxy/applications.json` points `/tandr-tr4-foot` at ssh port
+   `2223`. The running `tr4` guest forwards `2224`.** Nothing listens on 2223 —
+   `ssh -p 2223` is refused, `ssh -p 2224 -i PARKVPS/var/parkvps_ed25519
+   park@127.0.0.1` answers `tr4` and has both `foot` and
+   `/usr/local/bin/waypipe-tandr`. So the entry cannot launch as written. That
+   file belongs to the shell lane, not to this site, so it was not edited.
+2. **The proxy accepts the launch and spawns nothing.** `__launch(...)` returns
+   without error, no `waypipe` process appears, and the console shows only
+   `Session created`. This matches the documented stale-session trap in
+   `RRABBIT/docs/RUNBOOK.md` — a proxy session outlives the page, and the fix is
+   to **restart the proxy AND reload**. The proxy on 8912 belongs to another
+   session and was left alone.
+
+Also seen while trying: the shell took a **shader compile error → WebGL context
+lost** on one load (`An error occurred compiling the shaders`), which is a third
+distinct fault from the two `__whyNoContext()` names. A clean browser cleared it.
+
+**To finish this:** restart `npm run proxy`, fix the port in `applications.json`,
+`__launch('/tandr-tr4-foot')` two or three times, and shoot at 1920×1080 with the
+idle brake fed. Then delete this section.
+
 **Taking new ones:** drive the shell from source (`npm run m0`, port 8911) with
 `window.__op({op:'park', road:'<lane>', z:<n>})` — entrance gantries sit at
 `z=-180`, exits at `z=-2140`, and `__gantry()` reports both. **Feed the idle
