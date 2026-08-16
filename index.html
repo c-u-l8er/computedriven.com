@@ -8,22 +8,54 @@
             name="description"
             content="ComputeDriven is a systems studio building software whose claims you can derive again yourself. A claim is compute driven when the artifact carries enough — canonical input, executable semantics, a derived identity and its provenance — for an independent machine to derive it again. First proof: T&R, a 364 MB FreeBSD 15 distribution you can download."
         />
-        <meta
-            name="keywords"
-            content="operating system download, FreeBSD, pkgbase, distribution, qcow2, USB, VM, Travel &amp; RRABBIT, T&R, ComputeDriven, small image"
-        />
+        <link rel="canonical" href="https://computedriven.com/" />
         <meta property="og:title" content="ComputeDriven — keep the computation" />
         <meta
             property="og:description"
             content="Data driven keeps the result. Compute driven ships the derivation. A systems studio, and an operating system you can download to check it."
         />
         <meta property="og:type" content="website" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
-            rel="stylesheet"
+        <meta property="og:url" content="https://computedriven.com/" />
+        <meta property="og:image" content="https://computedriven.com/img/tandr-three-apps.png" />
+        <meta property="og:image:width" content="1920" />
+        <meta property="og:image:height" content="1080" />
+        <meta
+            property="og:image:alt"
+            content="The Travel &amp; RRABBIT shell at 4K: three of the operating system's own programs standing as windows along a dark road, above seven amber gauge tubes"
         />
+        <meta name="twitter:card" content="summary_large_image" />
+
+        <!--
+            Self-hosted, and the reason is the page's own argument. The hero says
+            "no telemetry" and the operating system's headline property is "no
+            first-boot download" — a page that then makes a first-boot download to
+            a third party, one that logs the visitor's IP, is not the kind of
+            artifact this site is about. Two variable woff2 files, 53,720 bytes
+            total, latin subset only.
+
+            Both families ship ONE file covering the whole weight range: Google
+            served byte-identical woff2 for every weight requested (verified by
+            sha256 across 400/500/600/700), which is what a variable font looks
+            like from the outside. The `font-weight: 400 700` range below is what
+            makes that usable — declaring a single weight would silently flatten
+            every bold on the page.
+        -->
+        <style>
+            @font-face {
+                font-family: "Space Grotesk";
+                font-style: normal;
+                font-weight: 400 700;
+                font-display: swap;
+                src: url("/fonts/space-grotesk.woff2") format("woff2");
+            }
+            @font-face {
+                font-family: "JetBrains Mono";
+                font-style: normal;
+                font-weight: 400 700;
+                font-display: swap;
+                src: url("/fonts/jetbrains-mono.woff2") format("woff2");
+            }
+        </style>
         <link
             rel="icon"
             href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2303040a'/%3E%3Cpath d='M4 27 L14 6 L18 6 L28 27 Z' fill='none' stroke='%23F2C14E' stroke-width='2'/%3E%3Cpath d='M16 8 L16 25' stroke='%232DE2E6' stroke-width='2' stroke-dasharray='3 3'/%3E%3C/svg%3E"
@@ -950,6 +982,18 @@
                 gap: 1rem;
                 margin-top: 2rem;
             }
+            /* A pair meant to be read against each other — entrance and exit of the
+               same road. `auto-fit` would let a third slot open at wide widths and
+               break the comparison, so this one is explicitly two-up and stacks. */
+            .shots.two {
+                grid-template-columns: 1fr 1fr;
+                max-width: 880px;
+            }
+            @media (max-width: 720px) {
+                .shots.two {
+                    grid-template-columns: 1fr;
+                }
+            }
 
             /* ---------- thesis: the two postures ---------- */
             .vs {
@@ -1371,20 +1415,33 @@
                             machine, and get the same answer or a different one.
                             <br /><br />
                             It starts with an operating system. <b>T&amp;R</b> — FreeBSD 15
-                            assembled from pkgbase rather than installed, <b>364 MB</b>, no
-                            installer and no first-boot download.
+                            assembled from pkgbase rather than installed, no installer and no
+                            first-boot download. <b>626 MB carries the verifier</b>, which is the
+                            half that lets you take the sentence above literally; a
+                            <a href="#get">364 MB server image</a> without it is below.
                         </p>
+                        <!--
+                            This button used to fetch the 364 MB image, which is the one that
+                            cannot re-run anything: trvs lives in 0.3. The headline says "re-run
+                            it" and the boot report asks what `trvs doctor` printed, so the
+                            primary download has to be the artifact that can answer both. The
+                            smaller image is still a click away and still makes its own point.
+                        -->
                         <div class="dl-row">
                             <a
                                 class="btn-dl"
-                                href="https://github.com/c-u-l8er/travel-and-rrabbit/releases/download/v0.3/tandr-0.2.qcow2"
-                                >Download T&amp;R <span class="sz">qcow2 · 364 MB</span></a
+                                href="https://github.com/c-u-l8er/travel-and-rrabbit/releases/download/v0.3/tandr-0.3.qcow2"
+                                >Download T&amp;R <span class="sz">qcow2 · 626 MB</span></a
                             >
                             <a class="btn-ghost" href="#run">How to run it →</a>
                         </div>
                         <div class="dl-meta">
                             free · no account · no telemetry<br />
-                            sha256 9e8767be0140ac55…22023e ·
+                            <code
+                                >sha256
+                                7e0f027db3da721b7f0210c4d5101e2acf872e77036c088f53c1ad8fafc820f9</code
+                            ><br />
+                            release <b>v0.3</b> · this file is <code>tandr-0.3.qcow2</code> ·
                             <a href="https://github.com/c-u-l8er/travel-and-rrabbit/releases/tag/v0.3"
                                 >all files &amp; checksums</a
                             >
@@ -1396,6 +1453,7 @@
                             alt="The Travel &amp; RRABBIT shell at 4K: three of the operating system's own programs standing as windows along a dark road — a foot terminal, a Mousepad editor, and a Save As file chooser — above seven amber gauge tubes labelled CPU, RAM, SWAP, DISK, NET, TEMP and LOAD"
                             width="1920"
                             height="1080"
+                            fetchpriority="high"
                         />
                         <figcaption>
                             three of the operating system's own programs, as windows on the road —
@@ -1736,18 +1794,47 @@
                         folder names. And the signs standing along it already speak WRL:
                     </p>
 
-                    <figure class="shot" style="margin: 1.6rem 0; max-width: 640px">
-                        <img
-                            src="img/tandr-gate.png"
-                            alt="A gantry sign on the road reading, in two rows: T&amp;R and the arrow --home--&gt; on the first, 1:0-2 and the bracketed word [main] on the second"
-                            loading="lazy"
-                        />
-                        <figcaption>
-                            a gate board, photographed on the road —
-                            <code>--home--&gt;</code> is a WRL arrow, <code>[main]</code> is a WRL
-                            place, and <code>1:0-2</code> is lane : window-you-are-at - windows-total
-                        </figcaption>
-                    </figure>
+                    <div class="shots two">
+                        <figure class="shot">
+                            <img
+                                src="img/tandr-gate-enter.png"
+                                alt="The entrance gantry of a road: a board reading T&amp;R and the arrow --build--&gt; on the first row, 1:0-2 and the bracketed word [main] on the second, above three blue panels reading back to home, left open window, and right open window"
+                                width="800"
+                                height="300"
+                                loading="lazy"
+                            />
+                            <figcaption>
+                                <b>the entrance.</b> Blue panels are the things you can do on
+                                arriving: go back where you came from, or open a window to your
+                                left or your right. The board reads
+                                <code>--build--&gt;</code>, a WRL arrow, into <code>[main]</code>, a
+                                WRL place; <code>1:0-2</code> is lane : window-you-are-at -
+                                windows-total. The far board is this road's other end.
+                            </figcaption>
+                        </figure>
+                        <figure class="shot">
+                            <img
+                                src="img/tandr-gate-exit.png"
+                                alt="The exit gantry of the same road: the same T&amp;R --build--&gt; board now reading 1:2-2, above three panels reading home, back to the entrance, and plus lane new workspace"
+                                width="800"
+                                height="300"
+                                loading="lazy"
+                            />
+                            <figcaption>
+                                <b>the exit, on the same road.</b> The counter has moved
+                                <code>1:0-2</code> → <code>1:2-2</code> — you have passed both
+                                windows. Green panels are ways out: leave along
+                                <code>--home--&gt;</code>, loop back to the entrance, or open a lane
+                                that does not exist yet.
+                            </figcaption>
+                        </figure>
+                    </div>
+                    <p class="legend">
+                        Both photographed 2026-08-16 at 1920×1080, 16.7 ms/frame, on the shell
+                        running from source. <b>Nothing here is a mock-up or a diagram</b> — the
+                        signs are geometry in the scene, and the text on them is read out of the
+                        world graph rather than authored for the picture.
+                    </p>
 
                     <p class="lead">
                         Square brackets are places and arrows are roads — the same notation as the
@@ -2038,6 +2125,14 @@
                 <div class="wrap">
                     <div class="kicker">Get it</div>
                     <h2>Two images. Pick the one you need.</h2>
+                    <p class="legend" style="margin-bottom: 0.4rem">
+                        <b>One release, <code>v0.3</code>, holding two images.</b> The file names
+                        carry the image version, not the release version — so
+                        <code>tandr-0.2.qcow2</code> and <code>tandr-0.3.qcow2</code> are both
+                        current, and 0.2 is the smaller build rather than the older one. If you want
+                        to check anything this page claims, take 0.3: it is the one with
+                        <code>trvs</code> in it.
+                    </p>
                     <div class="flavours">
                         <div class="fl pick">
                             <h3>Server</h3>
@@ -2319,15 +2414,40 @@ sudo dd if=tandr.raw of=/dev/nvme0n1 bs=4M status=progress conv=fsync</div>
                     <div class="shots">
                         <figure class="shot">
                             <img src="img/tandr-greeter.jpg" alt="The Travel &amp; RRABBIT login screen: a checkered planet over an interchange of glowing roads, with a small instrument panel reading T &amp; R, Travel &amp; RRABBIT, and fields for USER and KEY above an IGNITION button" loading="lazy" />
-                            <figcaption>the login screen — the cockpit, before you are in it</figcaption>
+                            <!--
+                                Every other figure on this page states its date, machine and
+                                rendering path. This one could not, because nobody recorded where
+                                the artwork came from — and on this page of all pages, an
+                                unattributed image is the wrong kind of gap to leave silent.
+                            -->
+                            <figcaption>
+                                the login screen — the cockpit, before you are in it.
+                                <b>Provenance not recorded:</b> the background art predates this
+                                page and nobody wrote down whether it was drawn, rendered or
+                                generated. The panel, the fields and the IGNITION button are the
+                                real greeter.
+                            </figcaption>
                         </figure>
                         <figure class="shot">
                             <img src="img/tandr-foot.png" alt="A close view of one window on the road: a foot terminal showing a FreeBSD shell prompt with the output of an ls command" loading="lazy" />
                             <figcaption>a FreeBSD terminal, decoded into a sign on the road</figcaption>
                         </figure>
                         <figure class="shot">
-                            <img src="img/m3-tubes.png" alt="Seven amber gauge tubes reading CPU, RAM, SWAP, DISK, NET, TEMP and LOAD" loading="lazy" />
-                            <figcaption>seven gauges reading the real machine</figcaption>
+                            <img
+                                src="img/tandr-dash.png"
+                                alt="The full instrument cluster: a FRAME gauge reading 16.7 ms/frame, a lane panel reading build, seven amber gauge tubes for CPU RAM SWAP DISK NET TEMP and LOAD, a steering wheel, a P-R-C-D gear selector, and a DRIVE gauge. Two mirrors read NO REAR VIEW and NO REEL IN THE GLASS."
+                                width="1920"
+                                height="560"
+                                loading="lazy"
+                            />
+                            <figcaption>
+                                the instruments, 2026-08-16 — seven gauges reading the real machine,
+                                and <b>two mirrors that say what they cannot show you</b>: the road
+                                behind is not rendered, and the camera gear is not built. The red
+                                lines are this box, right then: swap at 64% against a 25% threshold,
+                                one sensor at 95.6 °C. <b>Swapping is a fault, not a level</b> — so
+                                the instrument says so rather than drawing a longer bar.
+                            </figcaption>
                         </figure>
                     </div>
                 </div>
@@ -2396,20 +2516,23 @@ sudo dd if=tandr.raw of=/dev/nvme0n1 bs=4M status=progress conv=fsync</div>
                             </div>
                         </div>
                         <div class="rung">
-                            <div class="rn">THE WORLD IS FREE <span>0.1% of the bill</span></div>
+                            <div class="rn">THE WORLD IS FREE <span>0.21% of the bill</span></div>
                             <div class="rw">
                                 The differentiated part — the graph, the provenance, the tracks,
                                 the thing nobody else sells — measures <b>247 KB</b> for a
                                 realistic world and <b>212.70 MB</b> at the shell's own enforced
                                 ceiling. Against 100 GB of machine data that is
-                                <b>a tenth of one percent</b>. You are charged for the machine;
-                                the world rides along.
+                                <b>about a fifth of one percent</b> at the ceiling, and
+                                <b>two ten-thousandths</b> of it in practice. You are charged for
+                                the machine; the world rides along.
                             </div>
                             <div>
                                 <span class="rc live">live_local</span>
                                 <span class="rc-note"
                                     >measured 2026-08-15 from the shell's own persistence, on our
-                                    machine</span
+                                    machine. This said "a tenth of one percent" for one day;
+                                    212.70 MB against 100 GB is 0.21%, and the error flattered
+                                    us — corrected 2026-08-16</span
                                 >
                             </div>
                         </div>
@@ -2628,10 +2751,23 @@ sudo dd if=tandr.raw of=/dev/nvme0n1 bs=4M status=progress conv=fsync</div>
 
                         <aside class="jn-act">
                             <h3>File one</h3>
+                            <!--
+                                Hand-maintained, and it cannot be otherwise without a build step
+                                this page does not have and should not acquire. So the honest form
+                                is a reading with a timestamp attached to it, not a counter that
+                                looks live. Move these ONLY in a commit that also moves the date,
+                                and count only what is actually filed. The live query is one click
+                                away and always beats this box.
+                            -->
                             <p class="jn-count">
                                 Reports received: <b>0</b><br />
                                 From real hardware: <b>0</b><br />
-                                As of 11 August 2026
+                                <b>Counted by hand on 11 August 2026</b> — nothing on this page
+                                fetches at runtime, so this is a reading and not a counter.
+                                <a
+                                    href="https://github.com/c-u-l8er/travel-and-rrabbit/issues?q=label%3Aboot-report"
+                                    >Count them yourself →</a
+                                >
                             </p>
                             <a
                                 class="btn-dl"

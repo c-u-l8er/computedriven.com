@@ -12,6 +12,23 @@ rather than burying: the contact form posts to Formspree. Nothing else on the
 page calls out at load, and the page still renders and downloads work with
 `formspree.io` blocked — only the form stops.
 
+**That sentence was false until 2026-08-16 and had been for as long as it
+existed.** The head carried a `fonts.googleapis.com` stylesheet, so every
+visitor made a request to Google that logged their IP before a single word
+rendered — on a page whose hero says *no telemetry* and whose headline product
+feature is *no first-boot download*. The fonts are self-hosted now:
+`fonts/space-grotesk.woff2` and `fonts/jetbrains-mono.woff2`, latin subset,
+**53,720 bytes for both**. Verified with `performance.getEntriesByType('resource')`
+— zero entries outside the origin.
+
+One thing to know before touching them: **each file is a variable font covering
+the whole 400–700 range.** Google served byte-identical woff2 for every weight
+requested (checked with sha256 across 400/500/600/700), so there is one file per
+family and the `@font-face` declares `font-weight: 400 700`. Declaring a single
+weight there would silently flatten every bold on the page. Measured after the
+change: at 64px, weight 700 renders 1.50× the ink of weight 400 in Space Grotesk
+and 1.31× in JetBrains Mono, so the axis is genuinely live.
+
 ## The argument the page makes
 
 Data driven keeps the result. Compute driven ships the derivation.
@@ -65,6 +82,33 @@ thanks you on submit and drops the message is precisely the failure this site
 is about. Failures print the reason the endpoint gave, and the typed message
 survives so it can be retried. If you touch that handler, keep the three paths
 honest: server error, network failure, success.
+
+## Screenshots
+
+`img/` holds only figures that show the current shell. The 2026-08-09 batch —
+`m2-flat`, `m3-tubes`, `m4-overview`, `m8-native-flat`, `tandr-rrabbit-boot` —
+was **deleted on 2026-08-16**, not merely unlinked. Four were already off the
+page; `m3-tubes.png` was still the third figure in `#aboard` and showed the
+concentric rainbow test pattern in windows with none of the instrument styling
+the shell now has. A figure that makes the software look more experimental than
+it is costs the same credibility as one that flatters it.
+
+Every figure states its date, machine and rendering path in its caption. The
+one exception is `tandr-greeter.jpg`, whose background art has **no recorded
+provenance**, and the caption now says so rather than leaving it to be asked.
+
+The gate pair (`tandr-gate-enter.png` / `tandr-gate-exit.png`) is meant to be
+read side by side — blue panels are what you can do on arriving, green are ways
+out, and the counter moves `1:0-2` → `1:2-2` between them. Keep them the same
+crop size or the comparison stops working.
+
+**Taking new ones:** drive the shell from source (`npm run m0`, port 8911) with
+`window.__op({op:'park', road:'<lane>', z:<n>})` — entrance gantries sit at
+`z=-180`, exits at `z=-2140`, and `__gantry()` reports both. **Feed the idle
+brake while you shoot** (`setInterval(()=>window.__fed(), 120)`): without it the
+FRAME gauge reads ~100 ms/frame, which is the brake and not the shell, and
+publishing it would be a false claim in the unflattering direction. Awake, it
+reads 16.7.
 
 ## Editing rules
 
