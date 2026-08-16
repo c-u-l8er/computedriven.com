@@ -184,10 +184,17 @@
                 padding: 0.42rem 0.9rem;
                 border-radius: 5px;
             }
-            /* 810, not 780: between 781 and 800 the links still rendered and the bar
-               ran ~6px past the viewport, so the whole document scrolled sideways.
-               Measured, not guessed — the links must hide BEFORE they overflow. */
-            @media (max-width: 810px) {
+            /* 860, not 810, not 780. Each number here was measured after a link was
+               added, and each time the same way: the links must hide BEFORE they
+               overflow, or the whole document scrolls sideways.
+                 780 → broke at 790 (8 links)
+                 810 → held at 8 links, broke at 811 when "Cloud" made it 9
+                 860 → 9 links need 854px; measured 2026-08-15 across
+                       811/830/850/860/870/880, which pins the natural width at
+                       ~854 and leaves 6px of margin.
+               Shortening a label does not buy anything here — tried "The ladder" →
+               "Ladder" and the threshold did not move. The count is what costs. */
+            @media (max-width: 860px) {
                 .navlinks a:not(.navdl) {
                     display: none;
                 }
@@ -669,6 +676,74 @@
                 color: var(--dim);
                 font-size: 0.85rem;
                 margin-top: 0.3rem;
+            }
+
+            /* ---------- T&R Cloud tiers ----------
+               The price and the cost of goods sit in the same card on purpose. A page
+               whose whole argument is "don't trust the number, re-run it" cannot then
+               print a price and hide what it costs to serve. The margin is derived
+               from the two figures above it, so a reader can check the division. */
+            .tiers {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                gap: 0.8rem;
+                margin-top: 1.8rem;
+            }
+            .tr {
+                border: 1px solid var(--border-soft);
+                border-radius: 8px;
+                background: var(--surface);
+                padding: 0.95rem 1rem;
+                display: flex;
+                flex-direction: column;
+            }
+            .tr.ent {
+                border-color: var(--border);
+                background: var(--surface-2);
+            }
+            .tr .nm {
+                font-family: var(--mono);
+                font-size: 0.64rem;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                color: var(--cyan);
+            }
+            .tr .px {
+                font-family: var(--mono);
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: var(--amber);
+                margin-top: 0.45rem;
+                line-height: 1.1;
+            }
+            .tr .px small {
+                font-size: 0.72rem;
+                font-weight: 400;
+                color: var(--muted);
+            }
+            .tr.ent .px {
+                font-size: 0.95rem;
+                color: var(--dim);
+                font-weight: 400;
+            }
+            .tr .cap {
+                font-family: var(--mono);
+                font-size: 0.8rem;
+                color: var(--text);
+                margin-top: 0.35rem;
+            }
+            .tr .cogs {
+                font-family: var(--mono);
+                font-size: 0.66rem;
+                color: var(--muted);
+                margin-top: 0.6rem;
+                border-top: 1px solid var(--border-soft);
+                padding-top: 0.55rem;
+            }
+            .tr .note {
+                font-size: 0.78rem;
+                color: var(--dim);
+                margin-top: 0.5rem;
             }
 
             /* ---------- boot reports ---------- */
@@ -1274,6 +1349,7 @@
                     <a href="#tracks">Tracks</a>
                     <a href="#cert">Certificate</a>
                     <a href="#run">Run it</a>
+                    <a href="#cloud">Cloud</a>
                     <a href="#gaps">Untested</a>
                     <a href="#join">Join</a>
                     <a class="navdl" href="#get">Download</a>
@@ -2257,6 +2333,150 @@ sudo dd if=tandr.raw of=/dev/nvme0n1 bs=4M status=progress conv=fsync</div>
                 </div>
             </section>
 
+            <!-- ============ T&R CLOUD ============ -->
+            <!--
+                Nothing in this section is built. It is priced in public anyway, because
+                the arithmetic IS the argument: a page that says "don't trust the number"
+                and then prints a price while hiding its cost of goods has stopped making
+                its own case. The COGS figures are Cloudflare R2 list rates read on
+                2026-08-14 ($0.015/GB-month, first 10 GB free, $0.00 egress); the margin
+                in each card is derived from the two numbers above it.
+
+                The enterprise card deliberately carries no price. The arithmetic says
+                ~$236/month would hold the same 65% margin on storage alone, but that is
+                arithmetic and not a decision, and storage alone is not what the tier
+                sells. Do not put a number there until Travis sets one.
+            -->
+            <section id="cloud">
+                <div class="wrap">
+                    <div class="kicker">T&amp;R Cloud</div>
+                    <h2>Your world is a graph. <em>Back up the graph, restore the world.</em></h2>
+                    <p class="lead">
+                        Not your files — your roads, your windows, your dashboards, your tracks,
+                        your park-mode collages, and the machine they all live on. Restore onto
+                        different hardware and drive the same routes. <b>None of it is built.</b>
+                        What follows is the design and its arithmetic, published before there is
+                        anything to sell, because the arithmetic is the part you can check.
+                    </p>
+
+                    <div class="rungs">
+                        <div class="rung">
+                            <div class="rn">RESTORE <span>the product</span></div>
+                            <div class="rw">
+                                Backup is the boring half. The thing being sold is the restore:
+                                a clean machine, a manifest, and the same world standing back up
+                                on it — the same roads, the same windows, the same tracks, and
+                                they still replay. It is
+                                <b>step six of the loop this studio already runs</b>, sold as a
+                                feature rather than bolted on beside one.
+                            </div>
+                            <div>
+                                <span class="rc spec">spec</span>
+                                <span class="rc-note"
+                                    >the chunker, the store and the rehydrate path are all
+                                    designed and none are written</span
+                                >
+                            </div>
+                        </div>
+                        <div class="rung">
+                            <div class="rn">FREE RESTORES <span>at every tier</span></div>
+                            <div class="rw">
+                                <b>Unlimited restores, including on the free tier.</b> That sounds
+                                like a concession and costs nothing: the store charges
+                                <b>$0.00 for egress at any volume</b>. Pulling ten terabytes back
+                                down is free to serve. The same restore is $204.80 a shot on
+                                block volumes and about $922 on S3.
+                            </div>
+                            <div>
+                                <span class="rc part">vendor rate</span>
+                                <span class="rc-note"
+                                    >provider list rates read 2026-08-14 — not our measurement,
+                                    and not cyan for that reason</span
+                                >
+                            </div>
+                        </div>
+                        <div class="rung">
+                            <div class="rn">THE WORLD IS FREE <span>0.1% of the bill</span></div>
+                            <div class="rw">
+                                The differentiated part — the graph, the provenance, the tracks,
+                                the thing nobody else sells — measures <b>247 KB</b> for a
+                                realistic world and <b>212.70 MB</b> at the shell's own enforced
+                                ceiling. Against 100 GB of machine data that is
+                                <b>a tenth of one percent</b>. You are charged for the machine;
+                                the world rides along.
+                            </div>
+                            <div>
+                                <span class="rc live">live_local</span>
+                                <span class="rc-note"
+                                    >measured 2026-08-15 from the shell's own persistence, on our
+                                    machine</span
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tiers">
+                        <div class="tr">
+                            <div class="nm">Free</div>
+                            <div class="px">$0</div>
+                            <div class="cap">10 GB</div>
+                            <div class="cogs">costs $0.00 to serve<br />the store's own free tier</div>
+                            <div class="note">Genuinely free, not subsidised.</div>
+                        </div>
+                        <div class="tr">
+                            <div class="nm">Driver</div>
+                            <div class="px">$6<small>/mo</small></div>
+                            <div class="cap">100 GB</div>
+                            <div class="cogs">costs $1.35 · <b>78% margin</b></div>
+                            <div class="note">One person's machine.</div>
+                        </div>
+                        <div class="tr">
+                            <div class="nm">Fleet</div>
+                            <div class="px">$19<small>/mo</small></div>
+                            <div class="cap">500 GB</div>
+                            <div class="cogs">costs $7.35 · <b>61% margin</b></div>
+                            <div class="note">Several machines, or one with media on it.</div>
+                        </div>
+                        <div class="tr">
+                            <div class="nm">Factory</div>
+                            <div class="px">$69<small>/mo</small></div>
+                            <div class="cap">2 TB</div>
+                            <div class="cogs">costs $30.57 · <b>56% margin</b></div>
+                            <div class="note">A working shop.</div>
+                        </div>
+                        <div class="tr ent">
+                            <div class="nm">Enterprise</div>
+                            <div class="px">price not set</div>
+                            <div class="cap">10 TB and up</div>
+                            <div class="cogs">storage alone costs $153.45</div>
+                            <div class="note">
+                                Not more gigabytes — <b>dedicated infrastructure</b>. Your own
+                                machine, your own database, data residency if you need it. A
+                                number here would be guessed, so there isn't one.
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="legend">
+                        Cost of goods is storage at the provider's list rate. The enterprise line
+                        is the storage floor only — a dedicated machine and a dedicated database
+                        sit on top of it, which is exactly why that tier is not priced by the
+                        gigabyte and is not priced on this page.
+                    </p>
+
+                    <p class="verdict">
+                        The unit economics are printed here for the same reason the failing laws
+                        are printed on this page and the missing rungs are printed above:
+                        <b>a margin you cannot see is a claim you cannot check.</b> If the
+                        arithmetic is wrong, it is wrong in public.
+                    </p>
+                    <span class="tag no"
+                        >nothing in this section exists · no store, no chunker, no account, nothing
+                        to buy</span
+                    >
+                </div>
+            </section>
+
             <!-- ============ GAPS ============ -->
             <section id="gaps">
                 <div class="wrap">
@@ -2326,6 +2546,15 @@ sudo dd if=tandr.raw of=/dev/nvme0n1 bs=4M status=progress conv=fsync</div>
                                 The 118 laws hold against generators we wrote ourselves. An
                                 adversary we did not write is a different test and it has never been
                                 run. <a href="#cert">That one takes two minutes.</a>
+                            </p>
+                        </div>
+                        <div class="gap">
+                            <h3>The cloud is a price list</h3>
+                            <p>
+                                T&amp;R Cloud has a design, a store picked and margins worked out,
+                                and <a href="#cloud">not one line of code</a>. No chunker, no
+                                manifest format, no account, nothing to buy. A tier table is not
+                                a product.
                             </p>
                         </div>
                         <div class="gap">
